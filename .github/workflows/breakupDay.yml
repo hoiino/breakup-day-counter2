@@ -2,21 +2,24 @@ name: Update Counter
 
 on:
   schedule:
-    - cron: "0 15 * * *"   # 매일 한국시간 00시
+    - cron: "0 15 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Calculate days
         run: |
           START="2025-11-11"
           TODAY=$(date +%Y-%m-%d)
-          DAYS=$(( ( $(date -d $TODAY +%s) - $(date -d $START +%s) ) / 86400 + 1 ))
+          DAYS=$(( ( $(date -d "$TODAY" +%s) - $(date -d "$START" +%s) ) / 86400 + 1 ))
 
           cat <<EOF > counter.svg
           <svg xmlns="http://www.w3.org/2000/svg" width="170" height="80">
@@ -34,8 +37,8 @@ jobs:
 
       - name: Commit update
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add counter.svg
           git commit -m "update counter" || exit 0
           git push
