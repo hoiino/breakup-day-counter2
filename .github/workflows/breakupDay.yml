@@ -1,0 +1,41 @@
+name: Update Counter
+
+on:
+  schedule:
+    - cron: "0 15 * * *"   # 매일 한국시간 00시
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Calculate days
+        run: |
+          START="2025-11-11"
+          TODAY=$(date +%Y-%m-%d)
+          DAYS=$(( ( $(date -d $TODAY +%s) - $(date -d $START +%s) ) / 86400 + 1 ))
+
+          cat <<EOF > counter.svg
+          <svg xmlns="http://www.w3.org/2000/svg" width="170" height="80">
+          <rect width="100%" height="100%" fill="#808080"/>
+          <text x="50%" y="35%" dominant-baseline="middle" text-anchor="middle"
+          font-family="Malgun Gothic" font-size="13" fill="#ffffff">
+          2025.11.11 부터
+          </text>
+          <text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle"
+          font-family="Malgun Gothic" font-size="28" fill="#ffffff">
+          ${DAYS}일째
+          </text>
+          </svg>
+          EOF
+
+      - name: Commit update
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add counter.svg
+          git commit -m "update counter" || exit 0
+          git push
