@@ -17,5 +17,11 @@
         font-weight="700"
         fill="#2F312E">
     D+126
-  </text>
+  <text x="85" y="82"
+        text-anchor="middle"
+        font-family="Malgun Gothic, sans-serif"
+        font-size="10"
+        fill="#7A7D78">
+      breakup day
+    </text>
 </svg>
