@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Calculate days and generate SVG
+      - name: Generate counter SVG
         run: |
           START="2025-11-11"
           TODAY=$(date +%Y-%m-%d)
@@ -24,7 +24,10 @@ jobs:
 
           cat <<EOF > counter.svg
 <svg xmlns="http://www.w3.org/2000/svg" width="170" height="100" viewBox="0 0 170 100">
-  <rect x="1" y="1" width="168" height="98" rx="14" ry="14" fill="#F4F5F3" stroke="#8F938E" stroke-width="2"/>
+  <rect x="1" y="1" width="168" height="98" rx="14" ry="14"
+        fill="#F4F5F3"
+        stroke="#8F938E"
+        stroke-width="2"/>
 
   <text x="85" y="32"
         text-anchor="middle"
@@ -40,7 +43,7 @@ jobs:
         font-size="30"
         font-weight="700"
         fill="#2F312E">
-        D+${DAYS}
+        D+\${DAYS}
   </text>
 
   <text x="85" y="82"
@@ -54,7 +57,7 @@ jobs:
 </svg>
 EOF
 
-      - name: Commit update
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
