@@ -1,7 +1,7 @@
 name: Update Counter
 
 on:
-  schedule:
+  schedule:https://github.com/hoiino/breakup-day-counter2/blob/main/.github/workflows/breakupDay.yml
     - cron: "0 15 * * *"
   workflow_dispatch:
 
