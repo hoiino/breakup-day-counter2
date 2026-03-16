@@ -13,43 +13,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Calculate days
+      - name: Calculate days and generate SVG
         run: |
           START="2025-11-11"
           TODAY=$(date +%Y-%m-%d)
           DAYS=$(( ( $(date -d "$TODAY" +%s) - $(date -d "$START" +%s) ) / 86400 + 1 ))
 
           cat <<EOF > counter.svg
-          <svg xmlns="http://www.w3.org/2000/svg" width="170" height="90" viewBox="0 0 170 90">
-            <rect x="1" y="1" width="168" height="88" rx="14" ry="14"
-                  fill="#F4F5F3" stroke="#8F938E" stroke-width="2"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="100" viewBox="0 0 170 100">
+  <rect x="1" y="1" width="168" height="98" rx="14" ry="14" fill="#F4F5F3" stroke="#8F938E" stroke-width="2"/>
 
-            <text x="85" y="32"
-                  text-anchor="middle"
-                  font-family="Malgun Gothic, sans-serif"
-                  font-size="12"
-                  fill="#5E615C">
-              2025.11.11
-            </text>
+  <text x="85" y="32"
+        text-anchor="middle"
+        font-family="Malgun Gothic, sans-serif"
+        font-size="12"
+        fill="#5E615C">
+        2025.11.11
+  </text>
 
-            <text x="85" y="63"
-                  text-anchor="middle"
-                  font-family="Malgun Gothic, sans-serif"
-                  font-size="30"
-                  font-weight="700"
-                  fill="#2F312E">
-              D+${DAYS}
-            <text x="85" y="82"
-                  text-anchor="middle"
-                  font-family="Malgun Gothic, sans-serif"
-                  font-size="10"
-                  fill="#7A7D78">
-                breakup day
-              </text>
-          </svg>
-          EOF
+  <text x="85" y="60"
+        text-anchor="middle"
+        font-family="Malgun Gothic, sans-serif"
+        font-size="30"
+        font-weight="700"
+        fill="#2F312E">
+        D+${DAYS}
+  </text>
+
+  <text x="85" y="82"
+        text-anchor="middle"
+        font-family="Malgun Gothic, sans-serif"
+        font-size="10"
+        fill="#7A7D78">
+        breakup day
+  </text>
+
+</svg>
+EOF
 
       - name: Commit update
         run: |
