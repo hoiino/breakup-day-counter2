@@ -19,7 +19,7 @@ jobs:
       - name: Update counter.svg
         run: |
           START="2025-11-11"
-          TODAY=$(date +%Y-%m-%d)
+          TODAY=$(TZ=Asia/Seoul date +%Y-%m-%d)
           DAYS=$(( ( $(date -d "$TODAY" +%s) - $(date -d "$START" +%s) ) / 86400 + 1 ))
 
           echo '<svg xmlns="http://www.w3.org/2000/svg" width="170" height="100" viewBox="0 0 170 100">' > counter.svg
